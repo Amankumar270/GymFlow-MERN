@@ -25,5 +25,17 @@ GymFlow is a complete, full-stack subscription management web application built 
 
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/Amankumar270/GymFlow-MERN.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
+# STEP 1: Clone the Repository and enter the project folder
+git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
 cd GymFlow
+
+# STEP 2: Set up and start the Backend API Server (Runs on port 5000)
+cd backend
+npm install
+npm start
+
+# STEP 3: Open a new terminal tab, navigate to the frontend folder, and launch the React app
+cd ../frontend
+npm install
+npm run dev
+
