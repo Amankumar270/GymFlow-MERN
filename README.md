@@ -23,19 +23,27 @@ GymFlow is a complete, full-stack subscription management web application built 
 
 ## 💻 How to Run the Project Locally
 
-### 1. Clone the repository
-```bash
-# STEP 1: Clone the Repository and enter the project folder
-git clone [https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git)
-cd GymFlow
+Follow these three simple steps to set up and run the application on your local machine:
 
-# STEP 2: Set up and start the Backend API Server (Runs on port 5000)
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/Amankumar270/GymFlow-MERN.git
+cd GymFlow
+```
+
+### Step 2: Set Up and Start the Backend Server
+```bash
 cd backend
 npm install
 npm start
+```
+*The backend server will launch and run locally on `http://localhost:5000`*
 
-# STEP 3: Open a new terminal tab, navigate to the frontend folder, and launch the React app
+### Step 3: Set Up and Start the Frontend App
+```bash
 cd ../frontend
 npm install
 npm run dev
+```
+*The frontend application will compile and open your local browser window to view the portal.*
 
