@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom"
 
 function Products(){
+    const navigate = useNavigate()
     const [list, setList] = useState([])
     const url = "http://localhost:5000";
 
@@ -16,6 +18,48 @@ function Products(){
     useEffect(() => {
         fetchData()
     }, []) 
+
+    // 🌟 Handle selection of the plan with fake-payment update integration
+    // 🌟 Update this function inside your Products.jsx file:
+const handleSelectPlan = async (membership) => {
+    const token = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+
+    if (!token || !storedUser) {
+        alert("Please log in first to purchase a fitness membership plan!");
+        navigate('/login');
+        return;
+    }
+
+    const userObj = JSON.parse(storedUser);
+
+    try {
+        const response = await axios.post(`${url}/api/auth/subscribe`, {
+            email: userObj.email,
+            planName: membership.title // Still updates the user model on backend
+        });
+
+        if (response.data.success) {
+            alert(`🎉 Activation Successful! ${response.data.message}`);
+            
+            // 🌟 COMBINE user details with the full product information so dashboard can read it instantly!
+            const fullUserData = {
+                ...response.data.user,
+                membershipDescription: membership.description,
+                membershipFacilities: membership.facilities,
+                membershipYearlyPlan: membership.yearlyPlan
+            };
+            
+            localStorage.setItem("user", JSON.stringify(fullUserData));
+            navigate("/dashboard");
+        } else {
+            alert(response.data.message);
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Something went wrong with the checkout connection.");
+    }
+};
 
     return(
         <div className="mt-12 bg-gray-50 min-h-screen py-6">
@@ -68,10 +112,14 @@ function Products(){
                                     </ul>
                                 </div>
 
-                                <button className="w-full bg-gray-900 hover:bg-indigo-600 text-white font-bold py-4 px-4 rounded-2xl shadow-md transition-all duration-200 cursor-pointer text-center tracking-wide">
+                                {/* 🌟 Handled interactive dynamic subscription selection here */}
+                                <button 
+                                    className="w-full bg-gray-900 hover:bg-indigo-600 text-white font-bold py-4 px-4 rounded-2xl shadow-md transition-all duration-200 cursor-pointer text-center tracking-wide" 
+                                    onClick={() => handleSelectPlan(membership)}
+                                >
                                     Select This Plan
                                 </button>
-                            </div>
+                            </div> 
                         )
                     })
                 }    

@@ -8,14 +8,32 @@ import Review from "../components/Review"
 function Home(){
     return(
         <div>
+            {/* The gym announcement banner at the very top */}
             <Banner/>
-            <Hero/>
-            <Products/>
+            
+            {/* 🌟 Home scroll target anchor */}
+            <div id="home">
+                <Hero/>
+            </div>
+            
+            {/* 🌟 Memberships scroll target anchor */}
+            <div id="memberships">
+                <Products/>
+            </div>
+            
             <Deals/>
-            <Review/>
-            <Footer/>
+            
+            {/* 🌟 Reviews scroll target anchor */}
+            <div id="reviews">
+                <Review/>
+            </div>
+            
+            {/* 🌟 Footer / Contact Us scroll target anchor */}
+            <div id="footer">
+                <Footer/>
+            </div>
         </div>
     )
 }
 
-export default Home
+export default Home;
