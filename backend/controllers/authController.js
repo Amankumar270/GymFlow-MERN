@@ -46,7 +46,7 @@ export async function login(req, res) {
         }
 
         // Generate session token
-        const token = jwt.sign({ id: user._id }, "SECRET_KEY_JWT", { expiresIn: '1d' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
         res.json({ 
             success: true, 
@@ -124,6 +124,40 @@ export async function cancelSubscription(req, res) {
             }
         });
 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+
+
+// 👥 GET all active gym members (Admin View)
+export async function getGymMembers(req, res) {
+    try {
+        // Find users, select only relevant information, and sort by newest
+        const members = await userModel.find({}, "name email membershipPlan planStartDate planEndDate")
+                                      .sort({ createdAt: -1 });
+        
+        res.json({ success: true, data: members });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, message: "Failed to fetch members" });
+    }
+}
+
+// 🔑 ADMIN LOGIN VERIFICATION
+export async function adminLogin(req, res) {
+    try {
+        const { email, password } = req.body;
+
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            // Sign a special token identifying them strictly as an admin
+            const token = jwt.sign({ role: "admin" }, process.env.JWT_SECRET, { expiresIn: "1d" });
+            return res.json({ success: true, token, message: "Welcome back, Boss!" });
+        }
+
+        return res.json({ success: false, message: "Invalid Admin Credentials!" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ success: false, message: error.message });
