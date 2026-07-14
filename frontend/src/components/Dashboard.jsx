@@ -6,7 +6,7 @@ import { FaUserCircle, FaDumbbell, FaCalendarAlt, FaCheckCircle, FaExclamationCi
 function Dashboard() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    const url = "https://gym-flow-mern.vercel.app";
+    const url = "https://gym-flow-mern-backend.vercel.app/";
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
