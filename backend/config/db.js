@@ -1,30 +1,36 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-// Cache the connection state across serverless function boots
-let isConnected = false;
+let cachedConnection = null;
 
-async function connectDB(){
-    // Standardize variable name check
+async function connectDB() {
     const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
     if (!uri) {
-        console.error("❌ MongoDB connection string is missing from Vercel variables!");
-        return;
+        throw new Error("❌ MongoDB connection string is missing from Vercel!");
     }
 
-    if (isConnected) {
-        console.log("🔄 Using existing database connection instance");
-        return;
+    // If a connection already exists, return it immediately
+    if (cachedConnection && mongoose.connection.readyState === 1) {
+        return cachedConnection;
     }
 
-    try {
-        const db = await mongoose.connect(uri);
-        isConnected = db.connections[0].readyState;
-        console.log("Database connected successfully");
+    // If there is no connection, create a new promise chain and store it
+    if (!cachedConnection) {
+        const opts = {
+            bufferCommands: false, // 👈 CRUCIAL: Stop Mongoose from buffering blindly for 10s!
+        };
+
+        cachedConnection = mongoose.connect(uri, opts).then((mongooseInstance) => {
+            console.log("✅ Database successfully connected!");
+            return mongooseInstance;
+        }).catch((err) => {
+            cachedConnection = null; // Reset cache on failure
+            console.error("❌ Database connection error:", err);
+            throw err;
+        });
     }
-    catch(err) {
-        console.log("❌ Database connection error:", err);
-    }
+
+    return cachedConnection;
 }
 
 export default connectDB;

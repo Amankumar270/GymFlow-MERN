@@ -1,45 +1,48 @@
-import express from "express"
-import dotenv from "dotenv"
-import cors from "cors"
-import connectDB from "./config/db.js"
-import productRouter from "./routes/productRoutes.js" // Imported product Router
-import authRouter from "./routes/authRoutes.js" //  Imported Auth Router
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/db.js";
+import productRouter from "./routes/productRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 
-dotenv.config()
-const app = express()
+dotenv.config();
+const app = express();
 
-// 🛠️ Robust CORS Configuration for Production
+// 1. Production CORS Rules
 app.use(cors({
-    origin: "*", // Allows requests from your Vercel frontend link
+    origin: "*",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
-}))
+}));
+app.options("*", cors());
 
-// Explicitly handle preflight OPTIONS requests for serverless functions
-app.options("*", cors())
+app.use(express.json());
 
-app.use(express.json())
+// 2. 🛠️ Serverless Middleware: Guarantee database connection before routing traffic
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        res.status(500).json({ error: "Database connection failed", details: err.message });
+    }
+});
 
-// Connect to MongoDB Atlas
-connectDB()
-
-// Base route to confirm deployment status
+// 3. Base verification route
 app.get("/", (req, res) => {
-    res.send("API working")
-}) 
+    res.send("API working");
+}); 
 
-// API Routes
-app.use("/api/product", productRouter)
-app.use("/api/auth", authRouter) // 🌟 Connected Auth Endpoints
-app.use("/images", express.static('uploads'))
+// 4. API Routes
+app.use("/api/product", productRouter);
+app.use("/api/auth", authRouter);
+app.use("/images", express.static('uploads'));
 
+// 5. Port Allocation Environment Isolation
 const PORT = process.env.PORT || 5000;
-
-// Only start the local server if we are NOT on Vercel
-if (process.env.NODE_ENV !== "production") {
-    app.listen(PORT, () => console.log(`Local server is working on port ${PORT}`));
+if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
+    app.listen(PORT, () => console.log(`Local server working on port ${PORT}`));
 }
 
-// Export the app instance so Vercel can run it completely serverless
 export default app;
