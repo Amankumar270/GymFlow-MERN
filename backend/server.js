@@ -2,8 +2,8 @@ import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import connectDB from "./config/db.js"
-import productRouter from "./routes/productRoutes.js"
-import authRouter from "./routes/authRoutes.js" // 🌟 Imported Auth Router
+import productRouter from "./routes/productRoutes.js" // Imported product Router
+import authRouter from "./routes/authRoutes.js" //  Imported Auth Router
 
 const app = express()
 dotenv.config()
