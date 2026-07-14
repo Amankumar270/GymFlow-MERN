@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 function Products(){
     const navigate = useNavigate()
     const [list, setList] = useState([])
-    const url = "https://gym-flow-mern.vercel.app";
+    const url = "https://gym-flow-mern.vercel-backend.app";
 
     async function fetchData(){
         const response = await axios.get(`${url}/api/product/list`)
@@ -83,7 +83,7 @@ const handleSelectPlan = async (membership) => {
                                 <div>
                                     <div className="w-full h-48 overflow-hidden rounded-2xl mb-6 shadow-sm">
                                         <img 
-                                            src={membership.image.startsWith('http') ? membership.image : `https://gym-flow-mern.vercel.app/images/${membership.image}`}
+                                            src={membership.image.startsWith('http') ? membership.image : `${url}/images/${membership.image}`}
                                             alt={membership.title} 
                                             className="w-full h-full object-cover hover:scale-105 transition duration-500"
                                         />

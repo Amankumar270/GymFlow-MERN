@@ -23,7 +23,7 @@ function Signup(){
         e.preventDefault(); // Prevents blank page refresh
         
         try {
-            const url = "https://gym-flow-mern.vercel.app/api/auth/signup";
+            const url = "https://gym-flow-mern-backend.vercel.app/api/auth/signup";
             const response = await axios.post(url, data);
 
             if (response.data.success) {

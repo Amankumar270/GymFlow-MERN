@@ -22,7 +22,7 @@ function Login(){
         e.preventDefault(); // Stops the page from refreshing automatically
         
         try {
-            const url = "https://gym-flow-mern.vercel.app/api/auth/login";
+            const url = "https://gym-flow-mern-backend.vercel.app/api/auth/login";
             const response = await axios.post(url, data);
 
             if (response.data.success) {

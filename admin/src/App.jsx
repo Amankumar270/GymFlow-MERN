@@ -29,7 +29,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await axios.post("https://gym-flow-mern.vercel.app/api/product/admin/login", {
+      const response = await axios.post("https://gym-flow-mern-backend.vercel.app/api/product/admin/login", {
         email,
         password,
       });
