@@ -8,16 +8,13 @@ import authRouter from "./routes/authRoutes.js";
 dotenv.config();
 const app = express();
 
-// 1. Production CORS Rules
+// 1. Production CORS Rules (Handles preflight checks automatically)
 app.use(cors({
     origin: "*",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
-
-// 🛠️ Fix: Handle preflight OPTIONS globally without causing path-to-regexp errors
-app.options(cors());
 
 app.use(express.json());
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 function List(){
     const[list, setList]=useState([])
-    const url="https://gym-flow-mern.vercel.app/";
+    const url="https://gym-flow-mern.vercel.app";
     async function fetchData(){
         const response = await axios.get(`${url}/api/product/list`)
         // console.log(response.data.data);
