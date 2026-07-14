@@ -47,8 +47,7 @@ function Dashboard() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         alert("Logged out successfully!");
-        navigate("/login");
-        window.location.reload(); 
+        window.location.href = "/login";
     };
 
     if (!user) return <div className="text-center mt-20 font-bold text-xl">Loading your fitness profile...</div>;
