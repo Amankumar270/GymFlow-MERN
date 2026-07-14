@@ -83,7 +83,7 @@ const handleSelectPlan = async (membership) => {
                                 <div>
                                     <div className="w-full h-48 overflow-hidden rounded-2xl mb-6 shadow-sm">
                                         <img 
-                                            src={`${url}/images/` + membership.image} 
+                                            src={membership.image.startsWith('http') ? membership.image : `https://gym-flow-mern.vercel.app/images/${membership.image}`}
                                             alt={membership.title} 
                                             className="w-full h-full object-cover hover:scale-105 transition duration-500"
                                         />
