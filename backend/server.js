@@ -34,8 +34,12 @@ app.use("/api/product", productRouter)
 app.use("/api/auth", authRouter) // 🌟 Connected Auth Endpoints
 app.use("/images", express.static('uploads'))
 
-// 🛠️ Dynamic Port Configuration for Vercel compatibility
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server is working on port ${PORT}`))
 
-export default app; // 👈 Required by Vercel's serverless builder to export the app instance
+// Only start the local server if we are NOT on Vercel
+if (process.env.NODE_ENV !== "production") {
+    app.listen(PORT, () => console.log(`Local server is working on port ${PORT}`));
+}
+
+// Export the app instance so Vercel can run it completely serverless
+export default app;
