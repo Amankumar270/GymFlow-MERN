@@ -15,11 +15,13 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
-app.options("*", cors());
+
+// 🛠️ Fix: Handle preflight OPTIONS globally without causing path-to-regexp errors
+app.options(cors());
 
 app.use(express.json());
 
-// 2. 🛠️ Serverless Middleware: Guarantee database connection before routing traffic
+// 2. Serverless Middleware: Guarantee database connection before routing traffic
 app.use(async (req, res, next) => {
     try {
         await connectDB();
