@@ -10,7 +10,7 @@ function Add(){
         yearlyPlan:"",
         facilities:""
     })
-    const url="http://localhost:5000"
+    const url="https://gym-flow-mern.vercel.app/"
     function handleChange(e){
         const{name, value} = e.target
         setData({...data,[name]:value})

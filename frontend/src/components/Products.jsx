@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 function Products(){
     const navigate = useNavigate()
     const [list, setList] = useState([])
-    const url = "http://localhost:5000";
+    const url = "https://gym-flow-mern.vercel.app/";
 
     async function fetchData(){
         const response = await axios.get(`${url}/api/product/list`)

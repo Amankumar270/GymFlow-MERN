@@ -20,4 +20,4 @@ app.use("/api/product", productRouter)
 app.use("/api/auth", authRouter) // 🌟 Connected Auth Endpoints
 app.use("/images", express.static('uploads'))
 
-app.listen(5000, ()=> console.log("Server is working on http://localhost:5000"))
+app.listen(5000, ()=> console.log("Server is working on https://gym-flow-mern.vercel.app/"))

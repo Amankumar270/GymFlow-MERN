@@ -9,8 +9,8 @@ function MembersList() {
     useEffect(() => {
         const fetchMembers = async () => {
             try {
-                 const url="http://localhost:5000"
-                // Adjust url to match your server configuration (e.g., http://localhost:5000)
+                 const url="https://gym-flow-mern.vercel.app/"
+                // Adjust url to match your server configuration (e.g., https://gym-flow-mern.vercel.app/)
                 const response = await axios.get(`${url}/api/auth/admin/members`); 
                 if (response.data.success) {
                     setMembers(response.data.data);
