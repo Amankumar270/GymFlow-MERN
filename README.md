@@ -33,6 +33,7 @@ Follow these simple steps to set up and run the entire application on your local
 git clone https://github.com/Amankumar270/GymFlow-MERN.git
 cd GymFlow-MERN
 ```
+
 ### Step 2: Set Up and Start the Backend Server
 1. Navigate to the backend directory:
 ```bash
@@ -42,18 +43,20 @@ cd backend
 ```bash
 npm install
 ```
-3. Create a .env file in the root of the backend folder and add your environment variables:
-```bash 
+3. Create a `.env` file in the root of the backend folder and add your environment variables:
+```env 
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key_string
 ADMIN_EMAIL=owner@gymflow.com
 ADMIN_PASSWORD=your_secure_admin_password
 ```
-4. Start the server
+4. Start the server using Nodemon:
 ```bash 
-npm start
+nodemon server.js
 ```
+*(Note: If you don't have nodemon installed globally, you can run `npx nodemon server.js` instead.)*
+
 ### Step 3: Set Up and Start the Frontend & Admin Applications
 1. To run the User Frontend: Open a terminal window at the project root directory and run:
 ```bash
